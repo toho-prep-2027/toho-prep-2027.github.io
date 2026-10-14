@@ -4,7 +4,7 @@ Target: 東京都調布市・桐朋小学校（桐朋学園小学校とは別校
 
 ## Origin and publishing prerequisite
 
-**Required:** dedicated GitHub Organization and its root Pages site at `https://<ORG>.github.io/`, using repository `<ORG>/<ORG>.github.io`. Keep this GitHub Organization exclusively for this application. Never use a path under `https://00983266shigemura.github.io/` while storing family data in localStorage: a repository path is not an origin boundary. A separately verified custom domain is an alternative only if already controlled and acceptable to the user; do not silently involve a DNS provider.
+**Required:** dedicated GitHub Organization and its root Pages site at `https://<ORG>.github.io/`, using repository `<ORG>/<ORG>.github.io`. Keep this GitHub Organization exclusively for this application. Never use a path under the user's personal `github.io` site while storing family data in localStorage: a repository path is not an origin boundary. A separately verified custom domain is an alternative only if already controlled and acceptable to the user; do not silently involve a DNS provider.
 
 Pages source: **GitHub Actions**. `.github/workflows/qa.yml` has the public schema/pattern gate and a deploy job gated by successful validation. PRs do not deploy. Inspect semantic disclosure risk before adding public files/merging; automatic pattern checks cannot guarantee semantic safety.
 

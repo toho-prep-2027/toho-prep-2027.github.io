@@ -50,6 +50,15 @@ for p, value in check_texts.items():
   assert not re.search(ptn,value),f'sensitive-looking content in {p}'
 assert 'function snapshotStatus(dt)' in raw and 'function recommend(day)' in raw
 assert sorted(p.name for p in P.iterdir() if p.is_file() and p.name not in {'README.md'})==['.nojekyll','icon.png','index.html','offline.appcache','sw.js']
+# Default-deny for the whole tree: every file in the repository must be on this list.
+ALLOWED={'.github/workflows/qa.yml','.nojekyll','README.md','content/public-data.json','icon.png','index.html','offline.appcache','qa/validate_public.py','sw.js'}
+present=set()
+for f in P.rglob('*'):
+ rel=f.relative_to(P).as_posix()
+ if rel=='.git' or rel.startswith('.git/') or not f.is_file():
+  continue
+ present.add(rel)
+assert present==ALLOWED,'files outside the public allowlist: '+str(sorted(present^ALLOWED))
 # Home-screen icon: PNG, 180x180, RGB without alpha (iOS 10 paints transparency black).
 png=(P/'icon.png').read_bytes()
 assert png[:8]==b'\x89PNG\r\n\x1a\n' and png[12:16]==b'IHDR','icon.png is not a PNG'
