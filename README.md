@@ -1,4 +1,4 @@
-# とうほう まいにちアトリエ v1.1.1 — GitHub Pages only (public content)
+# とうほう まいにちアトリエ v1.2 — GitHub Pages only (public content)
 
 Target: 東京都調布市・桐朋小学校（桐朋学園小学校とは別校）。既存分析A〜L、12活動を保持。
 
