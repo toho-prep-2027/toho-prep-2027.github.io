@@ -1,0 +1,57 @@
+name: Public safety gate and GitHub Pages deployment
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-public:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate public content and source allowlist
+        run: python3 qa/validate_public.py
+      - name: Verify required assets and exclude private inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          for file in index.html sw.js offline.appcache .nojekyll icon.png; do test -f "$file"; done
+          for file in family-import-v11.json private-config.json toho_2027_family_config.json _headers netlify.toml; do test ! -e "$file"; done
+          grep -q '^CACHE MANIFEST' offline.appcache
+
+  deploy:
+    if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
+    needs: verify-public
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    concurrency:
+      group: github-pages
+      cancel-in-progress: false
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - name: Package allowlisted static files only
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p _site
+          cp index.html sw.js offline.appcache .nojekyll icon.png _site/
+          test "$(find _site -type f | wc -l | tr -d ' ')" = 5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Deploy public static artifact
+        id: deployment
+        uses: actions/deploy-pages@v4

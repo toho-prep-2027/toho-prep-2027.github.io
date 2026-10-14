@@ -1,16 +1,16 @@
-# とうほう まいにちアトリエ v1.1 — GitHub Pages only (public content)
+# とうほう まいにちアトリエ v1.1.1 — GitHub Pages only (public content)
 
 Target: 東京都調布市・桐朋小学校（桐朋学園小学校とは別校）。既存分析A〜L、12活動を保持。
 
 ## Origin and publishing prerequisite
 
-**Required:** dedicated GitHub Organization and its root Pages site at `https://<ORG>.github.io/`, using repository `<ORG>/<ORG>.github.io`. Keep this GitHub Organization exclusively for this application. Never use a path under `https://00983266shigemura.github.io/` while storing family data in localStorage: a repository path is not an origin boundary. A separately verified custom domain is an alternative only if already controlled and acceptable to the user; do not silently involve a DNS provider.
+**Required:** dedicated GitHub Organization and its root Pages site at `https://<ORG>.github.io/`, using repository `<ORG>/<ORG>.github.io`. Keep this GitHub Organization exclusively for this application. Never use a path under the user's personal `github.io` site while storing family data in localStorage: a repository path is not an origin boundary. A separately verified custom domain is an alternative only if already controlled and acceptable to the user; do not silently involve a DNS provider.
 
 Pages source: **GitHub Actions**. `.github/workflows/qa.yml` has the public schema/pattern gate and a deploy job gated by successful validation. PRs do not deploy. Inspect semantic disclosure risk before adding public files/merging; automatic pattern checks cannot guarantee semantic safety.
 
 ## Strict publication boundary
 
-Publish only public `index.html`, `sw.js`, `offline.appcache` and `.nojekyll`; the workflow enumerates these assets in `_site` rather than publishing the repository root. `content/public-data.json` is **public generic content** for validation, not a separately deployed data endpoint. This repository contains no family import, observation data, child profiles, private snapshot, private source zip or original personal HTML.
+Publish only public `index.html`, `sw.js`, `offline.appcache`, `.nojekyll` and `icon.png` (home-screen icon, 180x180 RGB); the workflow enumerates these assets in `_site` rather than publishing the repository root. `content/public-data.json` is **public generic content** for validation, not a separately deployed data endpoint. This repository contains no family import, observation data, child profiles, private snapshot, private source zip or original personal HTML.
 
 Family observations are stored only in the user's browser's localStorage key `toho2027.family-learning.v1` on the validated dedicated-origin host. It is not a secure vault. Import private family data only after verifying the host and security gates. Existing Google Sheets/Calendar/Dossier are authoritative and read-only.
 
