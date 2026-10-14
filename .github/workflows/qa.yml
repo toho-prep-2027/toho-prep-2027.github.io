@@ -21,7 +21,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for file in index.html sw.js offline.appcache .nojekyll; do test -f "$file"; done
+          for file in index.html sw.js offline.appcache .nojekyll icon.png; do test -f "$file"; done
           for file in family-import-v11.json private-config.json toho_2027_family_config.json _headers netlify.toml; do test ! -e "$file"; done
           grep -q '^CACHE MANIFEST' offline.appcache
 
@@ -47,8 +47,8 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p _site
-          cp index.html sw.js offline.appcache .nojekyll _site/
-          test "$(find _site -type f | wc -l | tr -d ' ')" = 4
+          cp index.html sw.js offline.appcache .nojekyll icon.png _site/
+          test "$(find _site -type f | wc -l | tr -d ' ')" = 5
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site

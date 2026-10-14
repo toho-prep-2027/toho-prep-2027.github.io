@@ -49,5 +49,14 @@ for p, value in check_texts.items():
  ]:
   assert not re.search(ptn,value),f'sensitive-looking content in {p}'
 assert 'function snapshotStatus(dt)' in raw and 'function recommend(day)' in raw
-assert sorted(p.name for p in P.iterdir() if p.is_file() and p.name not in {'README.md'})==['.nojekyll','index.html','offline.appcache','sw.js']
+assert sorted(p.name for p in P.iterdir() if p.is_file() and p.name not in {'README.md'})==['.nojekyll','icon.png','index.html','offline.appcache','sw.js']
+# Home-screen icon: PNG, 180x180, RGB without alpha (iOS 10 paints transparency black).
+png=(P/'icon.png').read_bytes()
+assert png[:8]==b'\x89PNG\r\n\x1a\n' and png[12:16]==b'IHDR','icon.png is not a PNG'
+assert int.from_bytes(png[16:20],'big')==180 and int.from_bytes(png[20:24],'big')==180,'icon.png must be 180x180'
+assert png[24]==8 and png[25]==2,'icon.png must be 8-bit RGB without alpha'
+assert '<link rel="apple-touch-icon" sizes="180x180" href="icon.png">' in raw
+# The embedded app data must be exactly the reviewed public data file.
+m=re.search(r'^var PUBLIC_DATA=(\{.*\});$',raw,re.M)
+assert m and json.loads(m.group(1))==data,'embedded PUBLIC_DATA differs from content/public-data.json'
 print('PUBLIC_DATA_GATE_PASS',len(data['menu']),'menus',len(data['days']),'days',hashlib.sha256(SITE.read_bytes()).hexdigest())

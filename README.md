@@ -1,4 +1,4 @@
-# とうほう まいにちアトリエ v1.1 — GitHub Pages only (public content)
+# とうほう まいにちアトリエ v1.1.1 — GitHub Pages only (public content)
 
 Target: 東京都調布市・桐朋小学校（桐朋学園小学校とは別校）。既存分析A〜L、12活動を保持。
 
@@ -10,7 +10,7 @@ Pages source: **GitHub Actions**. `.github/workflows/qa.yml` has the public sche
 
 ## Strict publication boundary
 
-Publish only public `index.html`, `sw.js`, `offline.appcache` and `.nojekyll`; the workflow enumerates these assets in `_site` rather than publishing the repository root. `content/public-data.json` is **public generic content** for validation, not a separately deployed data endpoint. This repository contains no family import, observation data, child profiles, private snapshot, private source zip or original personal HTML.
+Publish only public `index.html`, `sw.js`, `offline.appcache`, `.nojekyll` and `icon.png` (home-screen icon, 180x180 RGB); the workflow enumerates these assets in `_site` rather than publishing the repository root. `content/public-data.json` is **public generic content** for validation, not a separately deployed data endpoint. This repository contains no family import, observation data, child profiles, private snapshot, private source zip or original personal HTML.
 
 Family observations are stored only in the user's browser's localStorage key `toho2027.family-learning.v1` on the validated dedicated-origin host. It is not a secure vault. Import private family data only after verifying the host and security gates. Existing Google Sheets/Calendar/Dossier are authoritative and read-only.
 
